@@ -9,10 +9,6 @@ class Menroku
       @item.setImage(NSImage.imageNamed("Icon.png"))
     end
 
-    def to_ns
-      @source
-    end
-
     def attach(menu)
       @item.setMenu(menu.to_ns)
     end

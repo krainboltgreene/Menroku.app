@@ -3,7 +3,7 @@ class Menroku
     class Item
       NO_KEY = ""
 
-      def initialize(label, action)
+      def initialize(label, action = NO_KEY)
         @source = native.new
         @source.title = label
         @source.action = action
@@ -14,7 +14,7 @@ class Menroku
       end
 
       def attach(menu)
-        @source.setSubmenu(menu)
+        @source.setSubmenu(menu.to_ns)
       end
 
       def native

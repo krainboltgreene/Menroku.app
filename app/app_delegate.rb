@@ -4,9 +4,8 @@ class AppDelegate
   attr_accessor :status_menu
 
   def applicationDidFinishLaunching(notification)
-    @app_name = NSBundle.mainBundle.infoDictionary["CFBundleDisplayName"]
-    @source = Menroku.new
-    @status_menu = @source.menu
-    @status_item = @source.item
+    @source = Menroku.new(NSBundle.mainBundle.infoDictionary["CFBundleDisplayName"], "e0373389-154c-49ce-b38e-664793520400")
+
+    @source.to_ns
   end
 end

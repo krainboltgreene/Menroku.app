@@ -1,21 +1,35 @@
 class Menroku
   class App
-    def initialize(model, menu)
-      @model = model
-      @menu = menu
+    ENDPOINT = "apps"
+    INDEX_DEFAULT = []
 
-      @menu.attach(Menu::Item.new(label, "foo"))
+    def self.collection(client)
+      client.index(ENDPOINT, INDEX_DEFAULT).map do |payload|
+        new(client, payload)
+      end
     end
 
-    def label
-      "#{@model}:#{state}"
+    attr_reader :name
+
+    def initialize(client, payload)
+      @client = client
+      @payload = payload
+      @id = payload["id"]
+      @name = payload["name"]
+      @dynos = Dyno.collection(@client, self)
     end
 
-    def state
-      if @model.up?
-        "up"
-      else
-        "down"
+    def to_menu
+      Menu.new.tap do |menu|
+        @dynos.each do |dyno|
+          menu.attach(dyno.to_menu_item)
+        end
+      end
+    end
+
+    def to_menu_item
+      Menu::Item.new(@name).tap do |item|
+        item.attach(to_menu)
       end
     end
   end

@@ -1,28 +1,33 @@
 require "base64"
 
 class Menroku
-  require_relative "menroku/menu"
-  require_relative "menroku/status_bar"
   require_relative "menroku/client"
   require_relative "menroku/app"
+  require_relative "menroku/dyno"
+  require_relative "menroku/status_bar"
+  require_relative "menroku/menu"
 
-  def initialize
-    @item = StatusBar.new(self.class.name)
-    @menu = Menu.new
-    @client = Client.new("e0373389-154c-49ce-b38e-664793520400")
+  def initialize(name, token)
+    @status_bar = StatusBar.new(name)
+    @client = Client.new(token)
 
-    @item.attach(@menu)
 
-    @client.apps do |app|
-      App.new(app, @menu)
+    BW::Reactor.add_periodic_timer(1) do
+      @apps = App.collection(@client)
     end
   end
 
-  def menu
-    @menu.to_ns
+  def to_menu
+    Menu.new.tap do |menu|
+      @apps.each do |app|
+        menu.attach(app.to_menu_item)
+      end
+    end
   end
 
-  def item
-    @item.to_ns
+  def to_ns
+    BW::Reactor.add_periodic_timer(1) do
+      @status_bar.attach(to_menu)
+    end
   end
 end
