@@ -9,12 +9,13 @@ class Menroku
         @source.action = action
       end
 
-      def to_ns
-        @source
-      end
-
       def attach(menu)
         @source.setSubmenu(menu.to_ns)
+      end
+
+
+      def to_ns
+        @source
       end
 
       def native
