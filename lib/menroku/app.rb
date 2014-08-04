@@ -27,7 +27,7 @@ class Menroku
     end
 
     def to_menu_item
-      Menu::Item.new(@name).tap do |item|
+      Menu::Item.new(@name, "test").tap do |item|
         item.attach(to_menu)
       end
     end
