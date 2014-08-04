@@ -1,10 +1,9 @@
 class Menroku
   class Dyno
     ENDPOINT = "dynos"
-    INDEX_DEFAULT = []
 
     def self.collection(client, app)
-      client.index([ENDPOINT, app].join("/"), INDEX_DEFAULT).map do |payload|
+      client.index([App::ENDPOINT, app.id, ENDPOINT].join("/")).map do |payload|
         new(client, app, payload)
       end
     end

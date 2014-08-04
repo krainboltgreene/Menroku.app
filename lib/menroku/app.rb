@@ -1,10 +1,9 @@
 class Menroku
   class App
     ENDPOINT = "apps"
-    INDEX_DEFAULT = []
 
     def self.collection(client)
-      client.index(ENDPOINT, INDEX_DEFAULT).map do |payload|
+      client.index(ENDPOINT).map do |payload|
         new(client, payload)
       end
     end
