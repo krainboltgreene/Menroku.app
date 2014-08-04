@@ -10,11 +10,6 @@ class Menroku
   def initialize(name, token)
     @status_bar = StatusBar.new(name)
     @client = Client.new(token)
-
-
-    BW::Reactor.add_periodic_timer(1) do
-      @apps = App.collection(@client)
-    end
   end
 
   def to_menu
