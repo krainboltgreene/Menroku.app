@@ -15,7 +15,7 @@ class Menroku
 
   def to_menu
     Menu.new.tap do |menu|
-      @apps.each do |app|
+      App.collection(@client).each do |app|
         menu.attach(app.to_menu_item)
       end
     end
