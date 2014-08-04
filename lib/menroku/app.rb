@@ -9,6 +9,7 @@ class Menroku
     end
 
     attr_reader :name
+    attr_reader :id
 
     def initialize(client, payload)
       @client = client
