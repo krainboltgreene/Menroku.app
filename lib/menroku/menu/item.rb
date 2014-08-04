@@ -14,6 +14,9 @@ class Menroku
         @source.setSubmenu(menu.to_ns)
       end
 
+      def indentation=(value)
+        @source.setIndentationLevel(value)
+      end
 
       def to_ns
         @source
