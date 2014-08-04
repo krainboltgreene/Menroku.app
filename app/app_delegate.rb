@@ -8,4 +8,8 @@ class AppDelegate
 
     @source.to_ns
   end
+
+  def test
+    puts "hello"
+  end
 end
