@@ -10,13 +10,16 @@ class Menroku
 
         response_serializer :json
       end
+      @cache = Cache.new
     end
 
-    def index(endpoint, default, params = {})
-      @client.get(endpoint, params) do |result|
-        @response ||= result.object
+    def index(endpoint, params = {})
+      @cache.fetch("GET #{API_HOST}#{endpoint}") do
+        @client.get(endpoint, params) do |result|
+          @cache.store("GET #{API_HOST}#{endpoint}", result.object)
+        end
+        []
       end
-      @response || default
     end
   end
 end

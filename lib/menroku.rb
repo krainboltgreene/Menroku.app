@@ -2,6 +2,7 @@ require "base64"
 
 class Menroku
   require_relative "menroku/client"
+  require_relative "menroku/cache"
   require_relative "menroku/app"
   require_relative "menroku/dyno"
   require_relative "menroku/status_bar"
