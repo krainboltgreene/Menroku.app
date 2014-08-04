@@ -22,7 +22,7 @@ class Menroku
   end
 
   def to_ns
-    BW::Reactor.add_periodic_timer(1) do
+    BW::Reactor.add_periodic_timer(2) do
       @status_bar.attach(to_menu)
     end
   end
