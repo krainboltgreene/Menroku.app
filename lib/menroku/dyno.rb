@@ -10,11 +10,6 @@ class Menroku
       end
     end
 
-    attr_reader :name
-    attr_reader :size
-    attr_reader :state
-    attr_reader :command
-
     def initialize(client, app, payload)
       @client = client
       @app = app
@@ -34,13 +29,23 @@ class Menroku
     end
 
     def to_menu_item
-      Menu::Item.new(to_label, "test").tap do |item|
+      [to_name_menu_item, to_state_menu_item, to_command_menu_item]
+    end
+
+    def to_state_menu_item
+      Menu::Item.new(@state).tap do |item|
         item.indentation = 1
       end
     end
 
-    def to_label
-      "#{size} - #{state}: #{name}"
+    def to_command_menu_item
+      Menu::Item.new(@command).tap do |item|
+        item.indentation = 1
+      end
+    end
+
+    def to_name_menu_item
+      Menu::Item.new("#{@name} (#{@size})", "test")
     end
   end
 end

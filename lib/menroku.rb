@@ -14,15 +14,18 @@ class Menroku
   end
 
   def to_menu
-    Menu.new.tap do |menu|
+    Menu.new do |menu|
       App.collection(@client).each do |app|
         menu.attach(app.to_menu_item)
+      end
+      if menu.empty?
+        menu.attach(Menu::Item.new("Heroku hasn't responded", ""))
       end
     end
   end
 
   def to_ns
-    BW::Reactor.add_periodic_timer(2) do
+    BW::Reactor.add_periodic_timer(1) do
       @status_bar.attach(to_menu)
     end
   end
